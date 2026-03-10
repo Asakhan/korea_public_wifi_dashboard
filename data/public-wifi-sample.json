@@ -1,0 +1,13 @@
+[
+  {"id":"sample-1","name":"국민대학교 본부관","province":"서울특별시","district":"성북구","address":"정릉로 77","lat":37.6109,"lng":126.9972,"provider":"KT"},
+  {"id":"sample-2","name":"국민대학교 7호관","province":"서울특별시","district":"성북구","address":"정릉로 77","lat":37.6111,"lng":126.9975,"provider":"KT"},
+  {"id":"sample-3","name":"국민대학교 도서관","province":"서울특별시","district":"성북구","address":"정릉로 77","lat":37.6095,"lng":126.9961,"provider":"SKT"},
+  {"id":"sample-4","name":"강남역 지하상가","province":"서울특별시","district":"강남구","address":"강남대로 396","lat":37.4979,"lng":127.0276,"provider":"SKT"},
+  {"id":"sample-5","name":"서울시청 광장","province":"서울특별시","district":"중구","address":"세종대로 110","lat":37.5665,"lng":126.978,"provider":"LGU+"},
+  {"id":"sample-6","name":"광안리 해수욕장","province":"부산광역시","district":"수영구","address":"광안해변로 219","lat":35.1532,"lng":129.1189,"provider":"LGU+"},
+  {"id":"sample-7","name":"부산역 광장","province":"부산광역시","district":"동구","address":"중앙대로 206","lat":35.1152,"lng":129.0422,"provider":"KT"},
+  {"id":"sample-8","name":"센텀시티 지하철역","province":"부산광역시","district":"해운대구","address":"센텀남대로 35","lat":35.1689,"lng":129.1315,"provider":"SKT"},
+  {"id":"sample-9","name":"인천국제공항 1터미널","province":"인천광역시","district":"중구","address":"공항로 272","lat":37.4602,"lng":126.4407,"provider":"KT"},
+  {"id":"sample-10","name":"수원 화성행궁","province":"경기도","district":"수원시","address":"정조로 825","lat":37.2846,"lng":127.0152,"provider":"LGU+"},
+  {"id":"sample-11","name":"전주 한옥마을","province":"전북특별자치도","district":"전주시","address":"기린대로 99","lat":35.8147,"lng":127.1526,"provider":"KT"}
+]
