@@ -1,12 +1,13 @@
 import { signIn } from "@/auth"
 import { AlertCircle, Wifi } from "lucide-react"
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { error?: string }
+  searchParams: Promise<{ error?: string }>
 }) {
-  const isAccessDenied = searchParams?.error === "AccessDenied"
+  const params = await searchParams
+  const isAccessDenied = params?.error === "AccessDenied"
 
   return (
     <div className="min-h-screen bg-neutral-950 flex flex-col justify-center items-center p-4">

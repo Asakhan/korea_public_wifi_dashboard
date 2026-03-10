@@ -79,7 +79,7 @@ AUTH_GOOGLE_SECRET="your-google-client-secret"
 
 ### 2️⃣ 종속성 설치 및 DB 초기화
 ```bash
-# 1. 패키지 설치
+# 1. 패키지 설치 (이전에 Prisma 7을 쓰던 경우, node_modules 삭제 후 실행 권장)
 npm install
 
 # 2. Prisma 클라이언트 생성
@@ -92,6 +92,11 @@ npx prisma db push
 npx tsx prisma/seed.ts
 npx tsx scripts/fetch-wifi-data.ts
 ```
+
+**seed.ts 오류 발생 시** (PrismaClientInitializationError 등):
+1. PowerShell에서 `.\scripts\clean-install.ps1` 실행
+2. 또는 수동: `Remove-Item -Recurse -Force node_modules; Remove-Item package-lock.json; npm install`
+3. `npx prisma generate` → `npx prisma db push` → `npx tsx prisma/seed.ts`
 
 ### 3️⃣ 로컬 서버 실행
 ```bash
@@ -117,7 +122,7 @@ npm run dev
 4. **빌드 및 배포 커맨드 설정** (Build Settings):
    - **Build Command**: `npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && next build`
      > 빌드 시 자동으로 DB 스키마를 업데이트하고 초기 요구 계정을 주입합니다.
-   - **주의**: Prisma 7은 `@prisma/adapter-pg` 및 `pg` 패키지가 필요합니다. `npm install`로 설치됩니다.
+   - **참고**: Prisma 5 사용 (어댑터 없이 동작)
 5. **배포 시작**: Save를 누르고 배포를 진행하면 서비스가 온라인 상태로 전환됩니다.
 
 ---
@@ -125,9 +130,9 @@ npm run dev
 ## 🔑 허용 사용자(Allowlist) 설정 방법
 
 해당 서비스는 민감한 통계 데이터를 다룬다고 가정하여 *승인된 사용자*만 접근하도록 구성되어 있습니다.
-- DB의 `AllowedUser` 테이블에 이메일이 등록된 사용자만 Google 계정으로 로그인 가능합니다.
+- **DB**: `AllowedUser` 테이블에 이메일이 등록된 사용자
+- **환경변수**: `.env`의 `ALLOWED_EMAILS`(쉼표 구분). 예: `user@example.com`, `@itengineers.net`(도메인 전체 허용)
 - 과제 요구사항에 따라 `kts123@kookmin.ac.kr` 계정은 시스템 초기화 단계(`prisma/seed.ts`)에서 강력하게 주입됩니다.
-- 새로운 사용자를 추가하려면 관리자가 DB에 이메일을 Insert하면 됩니다.
 
 ---
 
