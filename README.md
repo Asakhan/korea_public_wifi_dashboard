@@ -6,7 +6,8 @@
 
 > **데이터 출처**: 공공데이터포털(data.go.kr) 전국 공공와이파이 표준데이터  
 > DB 연결 시: Prisma를 통해 저장된 데이터 표시.  
-> DB 미연결 시: `data/public-wifi-sample.json` 샘플 데이터를 Fallback으로 자동 표시 (API 한도/배포 환경 대응). 
+> DB 미연결/비어 있을 시: `data/freewifi_260313.csv`(전국 공공와이파이 CSV)를 사용하여 전국 와이파이 설치 현황 표시.  
+> CSV 파일이 없거나 오류 시: `data/public-wifi-sample.json` 샘플 데이터를 Fallback으로 자동 표시. 
 
 ---
 
@@ -18,7 +19,7 @@
 - **데이터 시각화 (Recharts)**: 지역별 설치 수(Bar Chart) / 시도별 비율(Pie Chart)
 - **지도 시각화 (React-Leaflet)**: 전국 와이파이 위치 정보 기반 마커 표시
 - **데이터 테이블**: 시/도 필터, 검색, 좌표 표시가 포함된 상세 내역 테이블
-- **데이터 Fallback**: DB 연결 실패 시 `data/public-wifi-sample.json` 샘플 데이터로 자동 전환
+- **데이터 Fallback**: DB 미사용 시 `data/freewifi_260313.csv` → 실패 시 `data/public-wifi-sample.json` 샘플 데이터로 자동 전환
 - **다크 모드 디자인**: 가독성이 높은 관리자 대시보드 테마 적용
 
 ---
@@ -39,8 +40,9 @@
 
 ```
 📦 korea_public_wifi_dashboard
- ┣ 📂 data                    # 정적 Fallback 데이터
- ┃ ┗ 📜 public-wifi-sample.json  # DB 미사용 시 표시되는 샘플 데이터
+ ┣ 📂 data                    # 정적/Fallback 데이터
+ ┃ ┣ 📜 freewifi_260313.csv   # 전국 공공와이파이 설치 현황 (주요 데이터 소스, DB 미사용 시 사용)
+ ┃ ┗ 📜 public-wifi-sample.json  # CSV 실패 시 표시되는 샘플 데이터
  ┣ 📂 prisma                  # Prisma ORM 스키마 및 DB Seed
  ┃ ┣ 📜 schema.prisma         # 데이터베이스 테이블 정의
  ┃ ┗ 📜 seed.ts               # 초기 Allowlist/샘플 데이터 생성 스크립트
