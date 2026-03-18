@@ -3,7 +3,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
-import { useEffect } from "react"
 
 // Fix for default marker icon in leaflet under React
 const DefaultIcon = L.icon({
@@ -16,6 +15,8 @@ const DefaultIcon = L.icon({
 })
 
 L.Marker.prototype.options.icon = DefaultIcon
+
+const MAX_MAP_MARKERS = 500
 
 interface MapComponentProps {
   locations: Array<{
@@ -35,23 +36,25 @@ export default function MapComponent({ locations }: MapComponentProps) {
     ? [firstValid.lat!, firstValid.lng!]
     : [37.5665, 126.978]
 
-  // Filter out invalid coordinates
+  // Filter out invalid coordinates and cap markers for performance
   const validLocations = locations.filter(l => l.lat != null && l.lng != null) as Array<typeof locations[0] & { lat: number; lng: number }>
+  const locationsToRender = validLocations.slice(0, MAX_MAP_MARKERS)
+  const isCapped = validLocations.length > MAX_MAP_MARKERS
 
   return (
     <div className="h-full w-full relative z-0 rounded-xl overflow-hidden">
       <MapContainer
-        center={center}
-        zoom={11}
-        scrollWheelZoom={false}
-        className="h-full w-full z-0"
-      >
-        {/* Using CartoDB Dark Matter for dark mode friendly map */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        />
-        {validLocations.map((loc) => (
+          center={center}
+          zoom={11}
+          scrollWheelZoom={false}
+          className="h-full w-full z-0"
+        >
+          {/* Using CartoDB Dark Matter for dark mode friendly map */}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          />
+          {locationsToRender.map((loc) => (
           <Marker key={loc.id} position={[loc.lat, loc.lng]}>
             <Popup>
               <div className="text-sm font-sans text-neutral-800">
@@ -67,6 +70,11 @@ export default function MapComponent({ locations }: MapComponentProps) {
           </Marker>
         ))}
       </MapContainer>
+      {isCapped && (
+        <p className="absolute bottom-2 left-2 z-[1000] text-xs text-neutral-400 bg-neutral-900/80 px-2 py-1 rounded">
+          표시 중: {MAX_MAP_MARKERS}건 (전체 {validLocations.length}건)
+        </p>
+      )}
     </div>
   )
 }

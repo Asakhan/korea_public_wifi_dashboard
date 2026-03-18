@@ -2,8 +2,12 @@ import { readFileSync } from "fs"
 import { join } from "path"
 import { parse } from "csv-parse/sync"
 import iconv from "iconv-lite"
+import { unstable_cache } from "next/cache"
 import { prisma } from "./prisma"
 import sampleData from "../../data/public-wifi-sample.json"
+
+const CACHE_REVALIDATE_SECONDS = 60
+const MAX_LOCATIONS_DISPLAY = 1000
 
 export interface WifiLocationRow {
   id: string
@@ -143,13 +147,15 @@ function getFallbackData(): DashboardData {
   return { ...processed, locations, source: "fallback" }
 }
 
-export async function getDashboardData(): Promise<DashboardData> {
+async function getDashboardDataUncached(): Promise<DashboardData> {
   // CSV 우선: freewifi_260313.csv가 있으면 전국 데이터로 표시 (DB 시드보다 CSV 전체 사용)
   const csvLocations = loadWifiFromCsv()
   if (csvLocations && csvLocations.length > 0) {
     const processed = processLocations(csvLocations)
-    const maxDisplay = 5000
-    const locationsToShow = csvLocations.length > maxDisplay ? csvLocations.slice(0, maxDisplay) : csvLocations
+    const locationsToShow =
+      csvLocations.length > MAX_LOCATIONS_DISPLAY
+        ? csvLocations.slice(0, MAX_LOCATIONS_DISPLAY)
+        : csvLocations
     return { ...processed, locations: locationsToShow, source: "csv" }
   }
 
@@ -165,7 +171,7 @@ export async function getDashboardData(): Promise<DashboardData> {
         lat: true,
         lng: true,
       },
-      take: 1000,
+      take: MAX_LOCATIONS_DISPLAY,
     })
     if (locations.length > 0) {
       const rows: WifiLocationRow[] = locations.map((loc) => ({
@@ -187,3 +193,9 @@ export async function getDashboardData(): Promise<DashboardData> {
 
   return getFallbackData()
 }
+
+export const getDashboardData = unstable_cache(
+  getDashboardDataUncached,
+  ["dashboard-wifi"],
+  { revalidate: CACHE_REVALIDATE_SECONDS }
+)

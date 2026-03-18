@@ -6,8 +6,6 @@ import { DataTable } from "@/components/DataTable"
 import { Database, MapPin, Wifi, Activity } from "lucide-react"
 import { getDashboardData } from "@/lib/get-wifi-data"
 
-export const dynamic = "force-dynamic"
-
 export default async function DashboardPage() {
   const data = await getDashboardData()
 
@@ -27,11 +25,7 @@ export default async function DashboardPage() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span>
-              {data.source === "db"
-                ? "데이터베이스 동기화 완료"
-                : data.source === "csv"
-                  ? "freewifi_260313.csv 데이터"
-                  : "샘플 데이터 표시"}
+              Last Update: {new Date().toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
             </span>
           </div>
         </div>
