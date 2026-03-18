@@ -1,5 +1,5 @@
 import SidebarLayout from "@/components/SidebarLayout"
-import { BookOpen, MapPin, Database, Award, CheckCircle } from "lucide-react"
+import { BookOpen, Database, Award, CheckCircle } from "lucide-react"
 
 export default function AboutPage() {
   return (
@@ -60,22 +60,6 @@ export default function AboutPage() {
                   <span>Recharts, React-Leaflet 기반의 인터랙티브 시각화</span>
                 </li>
               </ul>
-            </div>
-          </div>
-
-          <hr className="border-neutral-800 my-8" />
-
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-blue-400 flex items-center mb-4">
-              <MapPin className="w-5 h-5 mr-2" />
-              과제 제출 안내
-            </h3>
-            <p className="text-neutral-300 mb-4">
-              본 서비스는 허용된 사용자(Allowed Users)만 접근 가능하도록 설정되어 있습니다. 
-              최초 seed 데이터를 통해 아래 계정은 기본적으로 접근 권한이 부여됩니다.
-            </p>
-            <div className="bg-black/50 p-4 rounded-lg border border-neutral-800 font-mono text-sm text-green-400 inline-block">
-              kts123@kookmin.ac.kr
             </div>
           </div>
         </div>
