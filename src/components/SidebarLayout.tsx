@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
-import { BarChart3, Map as MapIcon, Info, LogOut } from "lucide-react"
+import { BarChart3, Map as MapIcon, Info, BookOpen, LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
@@ -16,6 +16,7 @@ export default function SidebarLayout({ children }: SidebarProps) {
   const navLinks = [
     { href: "/", label: "대시보드", icon: BarChart3 },
     { href: "/about", label: "서비스 소개", icon: Info },
+    { href: "/guestbook", label: "방명록", icon: BookOpen },
   ]
 
   return (

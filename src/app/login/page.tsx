@@ -22,15 +22,15 @@ export default async function LoginPage({
           공공 와이파이 대시보드
         </h2>
         <p className="text-neutral-400 text-center mb-8">
-          허용된 관리자 계정으로 로그인해주세요.
+          Google 계정으로 로그인하여 회원가입하세요.
         </p>
 
         {isAccessDenied && (
           <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-xl flex items-start space-x-3 animate-in fade-in slide-in-from-top-2">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <div className="text-sm">
-              <span className="font-semibold block mb-1">접근 권한이 없습니다</span>
-              허용된 이메일 계정이 아닙니다. 관리자에게 문의하여 접근 권한을 요청해주세요.
+              <span className="font-semibold block mb-1">로그인에 실패했습니다</span>
+              다시 시도해 주세요.
             </div>
           </div>
         )}
@@ -69,7 +69,7 @@ export default async function LoginPage({
 
         <p className="mt-8 text-center text-xs text-neutral-500">
           대학원 과제 제출용 프로젝트입니다.
-          <br />허용된 이메일 계정만 접근 가능합니다.
+          <br />Google 계정으로 로그인하면 회원가입 후 이용할 수 있습니다.
         </p>
       </div>
     </div>
